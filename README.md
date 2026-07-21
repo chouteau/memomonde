@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# memomonde
-Jeu de mémoire avec tous les pays du monde pour apprendre la capitale, le drapeau, la devise et la langue
-=======
 # 🌍 MemoMonde
 
 <p align="center">
@@ -81,4 +77,3 @@ MemoMonde/
    ```
 2. Double-cliquez sur le fichier **`index.html`** pour l'ouvrir directement dans votre navigateur web habituel (aucun serveur ni installation requise).
 3. Choisissez vos options de jeu et cliquez sur **🚀 Commencer le Quiz** !
->>>>>>> b583c98 (Initial commit: MemoMonde interactive world geography memory quiz game)
