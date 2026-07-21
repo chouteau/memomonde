@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemoMonde 🌍 - Jeu de Mémoire Géographique Mondial</title>
+    <meta name="description" content="Testez et améliorez vos connaissances sur les pays du monde : cartes, capitales, langues, devises et drapeaux !">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo-brand">
+            <span class="logo-icon">🌍</span>
+            <h1>MemoMonde</h1>
+        </div>
+        <div class="nav-actions">
+            <button id="btn-toggle-sound" class="btn-icon" title="Son actif / muet">🔊</button>
+            <button id="btn-toggle-theme" class="btn-icon" title="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="app-layout">
+            <!-- LEFT COLUMN: Fullscreen Map -->
+            <section class="map-section">
+                <svg id="world-map-svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet"></svg>
+                <div class="map-controls-overlay">
+                    <button id="btn-zoom-in" class="btn-map-control" title="Zoom avant">+</button>
+                    <button id="btn-zoom-out" class="btn-map-control" title="Zoom arrière">−</button>
+                    <button id="btn-zoom-reset" class="btn-map-control" title="Réinitialiser la vue">⟲</button>
+                </div>
+                <div id="map-tooltip" class="map-tooltip"></div>
+            </section>
+
+            <!-- RIGHT COLUMN: Vertical Side Panel (Setup, Quiz, Bilan) -->
+            <aside class="side-panel">
+                <!-- SCREEN 1: Game Setup / Options -->
+                <section id="screen-setup" class="glass-card">
+                    <div class="setup-header">
+                        <h2>🌍 Configuration</h2>
+                        <p>Mémorisez la position, capitales, langues, devises et drapeaux.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="select-continent">🗺️ Continent :</label>
+                            <select id="select-continent" class="form-control">
+                                <option value="all">Monde entier</option>
+                                <option value="Europe">Europe</option>
+                                <option value="Asie">Asie</option>
+                                <option value="Afrique">Afrique</option>
+                                <option value="Amérique du Nord">Amérique du Nord</option>
+                                <option value="Amérique du Sud">Amérique du Sud</option>
+                                <option value="Océanie">Océanie</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="select-category">🎯 Types de Questions :</label>
+                            <select id="select-category" class="form-control">
+                                <option value="all">Mixte (Toutes)</option>
+                                <option value="location">📍 Localisation</option>
+                                <option value="capital">🏛️ Capitales</option>
+                                <option value="flag">🚩 Drapeaux</option>
+                                <option value="language">🗣️ Langues</option>
+                                <option value="currency">💰 Devises</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="select-mechanic">🎮 Mécanique :</label>
+                            <select id="select-mechanic" class="form-control">
+                                <option value="mixed">Mixte (QCM & Clic)</option>
+                                <option value="qcm">QCM 4 Choix</option>
+                                <option value="click">Clic Carte Direct</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="select-qcount">📊 Questions :</label>
+                            <select id="select-qcount" class="form-control">
+                                <option value="10">10 Questions</option>
+                                <option value="20" selected>20 Questions</option>
+                                <option value="50">50 Questions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="btn-start-quiz" class="btn-primary">🚀 Commencer le Quiz</button>
+                </section>
+
+                <!-- SCREEN 2: Active Quiz Interface -->
+                <section id="screen-quiz" class="glass-card hidden">
+                    <div class="quiz-header">
+                        <span id="quiz-progress-text">Question 1 / 20</span>
+                        <span id="quiz-score-live">Score: 0</span>
+                    </div>
+
+                    <div class="quiz-progress-bar-wrap">
+                        <div id="quiz-progress-bar" class="quiz-progress-bar-fill"></div>
+                    </div>
+
+                    <div class="question-prompt-box">
+                        <h3 id="question-prompt">...</h3>
+                        <p id="question-subtext" class="question-subtext">...</p>
+                    </div>
+
+                    <div id="map-instruction-banner" class="map-instruction-banner hidden"></div>
+
+                    <!-- QCM Options Grid -->
+                    <div id="options-container" class="options-grid"></div>
+
+                    <!-- Educational Card (Appears on wrong answer) -->
+                    <div id="educational-card" class="educational-card hidden">
+                        <div class="edu-card-title">
+                            <span>💡 Fiche Apprentissage</span>
+                        </div>
+                        <div class="edu-details-grid">
+                            <div><strong>Nom :</strong> <span id="edu-flag"></span> <span id="edu-country-name"></span></div>
+                            <div><strong>Capitale :</strong> <span id="edu-capital"></span></div>
+                            <div><strong>Continent :</strong> <span id="edu-continent"></span></div>
+                            <div><strong>Langue :</strong> <span id="edu-language"></span></div>
+                            <div><strong>Monnaie :</strong> <span id="edu-currency"></span></div>
+                        </div>
+                    </div>
+
+                    <button id="btn-next-question" class="btn-primary hidden">Question Suivante ➔</button>
+                </section>
+
+                <!-- SCREEN 3: End of Game Bilan -->
+                <section id="screen-bilan" class="glass-card hidden">
+                    <div class="bilan-header">
+                        <h2>🎉 Bilan de Partie</h2>
+                        <div class="bilan-score-box">
+                            <div class="score-badge">
+                                <div class="number" id="bilan-score-raw">0 / 20</div>
+                                <small>Score Brut</small>
+                            </div>
+                            <div class="score-badge">
+                                <div class="number" id="bilan-score-20">0 / 20</div>
+                                <small>Note sur 20</small>
+                            </div>
+                        </div>
+                        <div id="bilan-rank-badge" class="rank-badge rank-normal">...</div>
+                    </div>
+
+                    <h3>📊 Répertoire d'erreurs</h3>
+                    <p class="question-subtext" style="margin-bottom: 0.75rem;">Cliquez pour illuminer sur la carte !</p>
+
+                    <div id="bilan-error-list"></div>
+
+                    <button id="btn-restart-quiz" class="btn-primary" style="margin-top: 1.5rem;">🔄 Nouvelle partie</button>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <!-- JS Scripts -->
+    <script src="countries.js"></script>
+    <script src="sound.js"></script>
+    <script src="map.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -141,3 +142,17 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+=======
+# Dev tools data cache
+*.geo.json
+iso.json
+mledoze_countries.json
+rest_countries.json
+build_data.py
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
+>>>>>>> b583c98 (Initial commit: MemoMonde interactive world geography memory quiz game)
