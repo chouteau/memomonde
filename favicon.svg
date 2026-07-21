@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="ocean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="land" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Ocean Globe -->
+  <circle cx="32" cy="32" r="29" fill="url(#ocean)" stroke="#38bdf8" stroke-width="2.5"/>
+  
+  <!-- Continents vector paths -->
+  <path fill="url(#land)" d="M12 22c3-5 8-7 12-4s4 6 9 3 4-5 8-4 5 4 7 8-1 9-5 10-6-2-9 2-3 5-7 4-6-5-8-9-3-6-6-10z" filter="url(#glow)"/>
+  <path fill="url(#land)" d="M38 34c3-1 6 1 7 4s-1 6-4 7-6-2-6-5 1-5 3-6z"/>
+  <path fill="url(#land)" d="M20 42c3 0 5 3 4 6s-4 4-7 3-3-4-1-6 2-3 4-3z"/>
+  
+  <!-- Grid Lines -->
+  <ellipse cx="32" cy="32" rx="29" ry="12" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <ellipse cx="32" cy="32" rx="14" ry="29" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-dasharray="3,2"/>
+</svg>
